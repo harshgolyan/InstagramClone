@@ -53,10 +53,10 @@ router.post("/login",(req,res)=>{
                           .then(doMatch =>{
                             if(doMatch){
                                 const token = jwt.sign({id:dbUser._id},SECRETKEY)
-                                res.json({token})
+                                return res.json({token,uid})
                             }
                             else{
-                                res.status(422).json({error:"invalid password"})
+                                return res.status(422).json({error:"invalid password"})
                             }
                           })  
                 }

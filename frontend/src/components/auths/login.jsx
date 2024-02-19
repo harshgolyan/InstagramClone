@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () =>{
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
+    const navigate = useNavigate()
 
     const onSubmitHandler = (e) =>{
         e.preventDefault()
@@ -17,7 +19,9 @@ const Login = () =>{
         .then(res => res.json())
         .then(data => {
             console.log(data)
+            console.log(data._id)
             localStorage.setItem('jwt',data.token)
+            navigate('/mainscreen')
         })
     }
     return<>
