@@ -18,10 +18,16 @@ const Login = () =>{
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            console.log(data._id)
-            localStorage.setItem('jwt',data.token)
-            navigate('/mainscreen')
+            if(data.error){
+                console.log('invalid credentials')
+            }
+            else{
+                console.log(data)
+                console.log(data.uid)
+                localStorage.setItem('jwt',data.token)
+                localStorage.setItem('userId',data.uid)
+                navigate('/mainscreen')
+            }
         })
     }
     return<>

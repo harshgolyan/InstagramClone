@@ -52,6 +52,7 @@ router.post("/login",(req,res)=>{
                     bcrypt.compare(password,dbUser.password)
                           .then(doMatch =>{
                             if(doMatch){
+                                const uid = dbUser._id
                                 const token = jwt.sign({id:dbUser._id},SECRETKEY)
                                 return res.json({token,uid})
                             }
