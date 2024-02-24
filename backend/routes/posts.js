@@ -43,6 +43,7 @@ router.get("/myPost",(req,res)=>{
 //likes
 
 router.put("/like",requireLogin,(req,res)=>{
+    console.log("like karo")
     Post.findByIdAndUpdate(req.body.postId,{
         $push:{likes:req.user._id}
     },{
@@ -56,7 +57,8 @@ router.put("/like",requireLogin,(req,res)=>{
 //dislikes
 
 router.put("/dislike",requireLogin,(req,res)=>{
-    Post.findByIdAndUpdate(req.body.potId,{
+    console.log("dislike karo")
+    Post.findByIdAndUpdate(req.body.postId,{
         $pull:{likes:req.user._id}
     },{
         new:true
