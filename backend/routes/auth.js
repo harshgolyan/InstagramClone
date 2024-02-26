@@ -53,6 +53,7 @@ router.post("/login",(req,res)=>{
                           .then(doMatch =>{
                             if(doMatch){
                                 const uid = dbUser._id
+                                // const name = dbUser.name
                                 const token = jwt.sign({id:dbUser._id},SECRETKEY)
                                 return res.json({token,uid})
                             }

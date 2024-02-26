@@ -68,4 +68,10 @@ router.put("/dislike",requireLogin,(req,res)=>{
     })
 })
 
+//follower
+
+router.put("/follow",requireLogin,(req,res)=>{
+    
+})
+
 module.exports = router

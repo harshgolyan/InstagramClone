@@ -9,6 +9,7 @@ app.use(cors())
 
 app.use(require('./routes/auth'))
 app.use(require('./routes/posts'))
+app.use(require('./routes/user'))
 
 async function connectToDatabase() {
     try {
