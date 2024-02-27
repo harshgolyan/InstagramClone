@@ -43,7 +43,6 @@ router.get("/myPost",(req,res)=>{
 //likes
 
 router.put("/like",requireLogin,(req,res)=>{
-    console.log("like karo")
     Post.findByIdAndUpdate(req.body.postId,{
         $push:{likes:req.user._id}
     },{
@@ -57,7 +56,6 @@ router.put("/like",requireLogin,(req,res)=>{
 //dislikes
 
 router.put("/dislike",requireLogin,(req,res)=>{
-    console.log("dislike karo")
     Post.findByIdAndUpdate(req.body.postId,{
         $pull:{likes:req.user._id}
     },{
@@ -68,10 +66,23 @@ router.put("/dislike",requireLogin,(req,res)=>{
     })
 })
 
-//follower
+//comments
 
-router.put("/follow",requireLogin,(req,res)=>{
-    
+router.put("/comment",requireLogin,(req,res)=>{
+    const Comment={
+        text:req.body.text,
+        postedBy:req.user._id
+
+    }
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push:{comments:Comment}
+    },{
+        new:true
+    })
+    .populate("comments.postedBy","name")
+    .populate("postedBy","name")
+    .then(result =>res.json(result))
+
 })
 
 module.exports = router
