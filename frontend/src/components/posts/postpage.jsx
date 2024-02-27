@@ -8,45 +8,51 @@ const Postpage = ({postInfo}) =>{
     const [post,setPost] = useState(null)
     
 
-   const onLikeHandler = () =>{
-    console.log('like karo')
-    if(liked === false){
-        fetch('http://localhost:4000/like',{
-            method:'put',
-            headers:{
-                'Content-Type':'application/json',
-                'Authorization':'Bearer '+localStorage.getItem('jwt')
-            },
-            body:JSON.stringify({postId : postInfo._id})
-        })
-        .then(res => res.json())
-        .then(data => {
-            setPost(data)
-        })
-        setLiked(true)
-    }
+    const onLikeHandler = () =>{
+        if(liked === false){
+            fetch('http://localhost:4000/like',{
+                method:'put',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':'Bearer '+localStorage.getItem('jwt')
+                },
+                body:JSON.stringify({postId : postInfo._id})
+            })
+            .then(res => res.json())
+            .then(data => {
+                setPost(data)
+            })
+            setLiked(true)
+        }
 
-    else{
-        fetch('http://localhost:4000/dislike',{
-            method:'put',
-            headers:{
-                'Content-Type':'application/json',
-                'Authorization':'Bearer '+localStorage.getItem('jwt')
-            },
-            body:JSON.stringify({postId : postInfo._id})
-        })
-        .then(res => res.json())
-        .then(data => {
-            setPost(data)
-        })
-        setLiked(false)
-    }
+        else{
+            fetch('http://localhost:4000/dislike',{
+                method:'put',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':'Bearer '+localStorage.getItem('jwt')
+                },
+                body:JSON.stringify({postId : postInfo._id})
+            })
+            .then(res => res.json())
+            .then(data => {
+                setPost(data)
+            })
+            setLiked(false)
+        }
 
     }
+    const name = postInfo.postedBy.name
+    
+
     
    
     return<>
     <div className="flex flex-col bg-grey-600 p-3 border-slate-950">
+        <div className="flex flex-row">
+            <img className="rounded-full h-8 w-8" src="https://images.unsplash.com/photo-1707343848655-a196bfe88861?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8"/>
+            <div className="pl-3">{postInfo.postedBy.name}</div>
+        </div>
         <div className="p-3 rounded-md mx-auto ">
             <img src={postInfo.photo}
             className="rounded-md"/>
