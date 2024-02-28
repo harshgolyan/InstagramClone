@@ -7,12 +7,15 @@ const LeftNavbar = () =>{
 
     const onclickhandler = () => {
         navigate('/createpost')
+    }
 
+    const profilehandler = () =>{
+        navigate('/myprofile')
     }
     return<>
         <div className="flex flex-col">
             <div className="flex flex-col p-10">
-            <HomeIcon className="h-10 w-10 text-black-500 m-3" />
+            <HomeIcon className="h-10 w-10 text-black-500 m-3" onClick={profilehandler}/>
             <HeartIcon className="h-10 w-10 text-black-500 m-3 mt-5" />
             <ChatAltIcon className="h-10 w-10 text-black-500 m-3" />
             <ShareIcon className="h-10 w-10 text-black-500 m-3" />

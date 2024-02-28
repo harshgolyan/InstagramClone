@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Postpage = ({postInfo}) =>{
     const [liked,setLiked] = useState(false)
     const [comment,setComment] = useState(null)
+    const [commentList,setCommentList] = useState(null)
     const [post,setPost] = useState(null)
     const navigate = useNavigate()
     
@@ -71,6 +72,9 @@ const Postpage = ({postInfo}) =>{
         })
         
     }
+    const userprofilehandler = () =>{
+        navigate('/userprofile')
+    }
     
     
 
@@ -80,6 +84,7 @@ const Postpage = ({postInfo}) =>{
     <div className="flex flex-col bg-grey-600 p-3 border-slate-950">
         <div className="flex flex-row">
             <img className="rounded-full h-8 w-8"
+            onClick={userprofilehandler}
             src="https://images.unsplash.com/photo-1707343848655-a196bfe88861?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8"/>
             <div className="pl-3">{postInfo.postedBy.name}</div>
         </div>
