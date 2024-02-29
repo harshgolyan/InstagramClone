@@ -72,8 +72,9 @@ const Postpage = ({postInfo}) =>{
         })
         
     }
+    const uid = postInfo.postedBy._id
     const userprofilehandler = () =>{
-        navigate('/userprofile')
+        navigate('/userprofile',{state: {id :uid}})
     }
     
     

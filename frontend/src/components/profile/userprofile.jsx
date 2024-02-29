@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () =>{
     const [user,setUser] = useState({})
-    const [post,setPost] = useState({})
+    const [post,setPost] = useState([])
     const [isfollowed,setIsFollowed] = useState(false)
     const [follower,setFollower] = useState({ user: { followers: [] } })
+    const navigate = useNavigate()
 
     //id fetching from navigate
     const location = useLocation()
     const id = location.state ? location.state.id : ''
-    console.log(id)
+
+    useEffect(()=>{
+        fetch(`http://localhost:4000/user/${id}`,{
+            method:"get",
+            headers:{
+              "Content-Type":"application/json",
+              "Authorization":"Bearer "+localStorage.getItem("jwt")
+          }
+        })
+          .then(res=>res.json())
+          .then(data =>{
+            console.log(data.user)
+            console.log(data.posts)
+          })
+    },[])
 
     //follow functionality
     const follow = () =>{
@@ -46,26 +62,9 @@ const UserProfile = () =>{
         }
     }
     
-
-    useEffect(()=>{
-        fetch(`http:/localhost:4000/user/${id}`,{
-        method:"get",
-        headers:{
-            "Content-Type":"application/json",
-            "Authorization":"Bearer " + localStorage.getItem('jwt')
-        },
-    })
-    .then(res =>res.json())
-    .then(data =>{
-        setUser(data.user)
-        setPost(data.posts)
-    })
-},[])
     return<>
     <div> 
-        <button className="bg-blue-200" onClick={follow}>Follow</button>
-        <h1>{user.name}</h1>
-        <h1>{follower.length}</h1>
+        <button className="bg-blue-200 p-2" onClick={follow}>Follow</button>
     </div>
     </>
 }

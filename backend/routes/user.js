@@ -15,10 +15,10 @@ router.get("/user/:id", requirelogin, (req, res) => {
             }
             return Post.find({ postedBy: req.params.id })
                 .populate("postedBy", "_id name")
-                .exec();
-        })
-        .then((user,posts) => {
-            return res.status(200).json({ user,posts });
+                .exec()
+                .then((posts) =>{
+                    return res.status(200).json({user,posts})
+                })
         })
         .catch(err => {
             return res.status(422).json({ error: err });
@@ -27,47 +27,52 @@ router.get("/user/:id", requirelogin, (req, res) => {
 
 //follow
 
-router.put("/follow",requirelogin,(req,res)=>{
-    User.findByIdAndUpdate(req.body.followId,{
-        $push:{followers:req.user._id}
-    },{
-        new:true
-    },(err,result)=>{
-        if(err){
-            res.status(422).json({error:err})
+router.put("/follow",requirelogin,async (req,res)=>{
+    try{
+        const followUser = await User.findByIdAndUpdate(req.body.followId,{
+            $push:{followers:req.user._id}
+        },{
+            new:true
+        })
+
+        const currentUser = await User.findByIdAndUpdate(req.user._id,{
+            $push:{following:req.body.followId}
+        },{
+            new:true
+        })
+        res.json({followUser,currentUser})
+    }
+    catch
+        (err){
+            res.status(422).json({ error: err.message })
         }
-        else{
-            User.findByIdAndUpdate(req.user._id,{
-                $push:{following:req.body.followId}
-            },{
-                new:true
-            })
-            .then(results =>res.json({results,result}))
-        }
-    })
+    
 })
 
 //unfollow
 
-router.put("/unfollow",requirelogin,(req,res)=>{
-    User.findByIdAndUpdate(req.body.followId,{
-        $pull:{followers:req.user._id}
-    },{
-        new:true
-    },(err,result)=>{
-        if(err){
-            res.status(422).json({error:err})
+router.put("/unfollow",requirelogin,async (req,res)=>{
+    try{
+        const followUser = await User.findByIdAndUpdate(req.body.followId,{
+            $pull:{followers:req.user._id}
+        },{
+            new:true
+        })
+
+        const currentUser = await User.findByIdAndUpdate(req.user._id,{
+            $pull:{following:req.body.followId}
+        },{
+            new:true
+        })
+        res.json({followUser,currentUser})
+    }
+    catch
+        (err){
+            res.status(422).json({ error: err.message })
         }
-        else{
-            User.findByIdAndUpdate(req.user._id,{
-                $pull:{following:req.body.followId}
-            },{
-                new:true
-            })
-            .then(results =>res.json({results,result}))
-        }
-    })
+    
 })
+    
 
 
     
