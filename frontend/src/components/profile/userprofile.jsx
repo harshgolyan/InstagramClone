@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import LeftNavbar from "../mainscreen/leftnavbar";
 
 const UserProfile = () =>{
     const [user,setUser] = useState({})
@@ -23,8 +24,8 @@ const UserProfile = () =>{
         })
           .then(res=>res.json())
           .then(data =>{
-            console.log(data.user)
-            console.log(data.posts)
+            setUser(data.user)
+            setPost(data.posts)
           })
     },[])
 
@@ -63,8 +64,29 @@ const UserProfile = () =>{
     }
     
     return<>
-    <div> 
-        <button className="bg-blue-200 p-2" onClick={follow}>Follow</button>
+    <div className="grid grid-cols-12">
+        <div className="text-2xl col-span-3 m-5">Instagram</div>
+        <div className="grid col-span-6"></div>
+        <div className="text-2xl col-span-3"></div>
+    </div>
+    <div className="grid grid-cols-12">
+        <div className="grid col-span-3"><LeftNavbar/></div>
+        <div className="grid col-span-6">
+            <div className="grid grid-flow-col">
+                <img 
+                className="h-20 w-20 rounded-full"
+                src="https://images.unsplash.com/photo-1682687221323-6ce2dbc803ab?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8"/>
+                    <div className="grid grid-flow-col">
+                        <div className="text-black text-2xl">@{user.name}</div>
+                        <button 
+                        className="bg-blue-500 p-4 pt-1 pb-1 rounded-md h-10 w-40 text-white"
+                        onClick={follow}
+                        >Follow</button>
+                        <button className="bg-slate-500 p-4 pt-1 pb-1 rounded-md h-10 w-40 text-white">Message</button>
+                    </div>
+            </div>     
+        </div>
+        <div className="grid col-span-3"></div>
     </div>
     </>
 }

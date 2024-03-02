@@ -12,12 +12,15 @@ const LeftNavbar = () =>{
     const profilehandler = () =>{
         navigate('/myprofile')
     }
+    const home = () =>{
+        navigate('/mainscreen')
+    }
     return<>
         <div className="flex flex-col">
             <div className="flex flex-col p-10">
-            <HomeIcon className="h-10 w-10 text-black-500 m-3" onClick={profilehandler}/>
+            <HomeIcon className="h-10 w-10 text-black-500 m-3" onClick={home}/>
             <HeartIcon className="h-10 w-10 text-black-500 m-3 mt-5" />
-            <ChatAltIcon className="h-10 w-10 text-black-500 m-3" />
+            <ChatAltIcon className="h-10 w-10 text-black-500 m-3" onClick={profilehandler} />
             <ShareIcon className="h-10 w-10 text-black-500 m-3" />
             <SearchIcon className="h-10 w-10 text-black-500 m-3" />
             <TemplateIcon className="h-10 w-10 text-black-500 m-3" onClick={onclickhandler} />
