@@ -77,11 +77,15 @@ const UserProfile = () =>{
                 className="h-20 w-20 rounded-full"
                 src="https://images.unsplash.com/photo-1682687221323-6ce2dbc803ab?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8"/>
                     <div className="grid grid-flow-col">
-                        <div className="text-black text-2xl">@{user.name}</div>
-                        <button 
+                        <div className="text-black text-2xl">{user.name}</div>
+                        {(!isfollowed)?<button 
                         className="bg-blue-500 p-4 pt-1 pb-1 rounded-md h-10 w-40 text-white"
                         onClick={follow}
-                        >Follow</button>
+                        >Follow</button>:
+                        <button 
+                        className="bg-slate-300 p-4 pt-1 pb-1 rounded-md h-10 w-40 text-white"
+                        onClick={follow}
+                        >Follow</button>}
                         <button className="bg-slate-500 p-4 pt-1 pb-1 rounded-md h-10 w-40 text-white">Message</button>
                     </div>
             </div>     
