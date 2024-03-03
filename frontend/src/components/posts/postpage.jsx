@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { HeartIcon,ChatIcon,ShareIcon } from '@heroicons/react/outline';
 import {HeartIcon as SolidHeartIcon} from "@heroicons/react/solid";
 import { useNavigate } from "react-router-dom";
+import Modal from 'react-modal';
 
 
 
 
 const Postpage = ({postInfo}) =>{
     const [liked,setLiked] = useState(false)
-    const [comment,setComment] = useState(null)
-    const [commentList,setCommentList] = useState(null)
+    const [comment,setComment] = useState([])
+    const [commentList,setCommentList] = useState([])
     const [post,setPost] = useState(null)
+    const [modalIsOpen,setModalIsOpen] = useState(false)
     const navigate = useNavigate()
     
     //like or dislike
@@ -69,9 +71,11 @@ const Postpage = ({postInfo}) =>{
         .then(data => {
             console.log(data)
             setComment('')
+            setCommentList(data)
         })
         
     }
+
     const uid = postInfo.postedBy._id
     const userprofilehandler = () =>{
         navigate('/userprofile',{state: {id :uid}})
@@ -97,7 +101,7 @@ const Postpage = ({postInfo}) =>{
             (<HeartIcon onClick={onLikeHandler} className="h-8 w-8 text-black-500 m-2"/>):
             (<SolidHeartIcon onClick={onLikeHandler} className="h-8 w-8 text-red-500 m-2"/>)
              }
-            <ChatIcon onClick={onCommentHandler} className="h-8 w-8 text-black-500 m-2" />
+            <ChatIcon onClick={() => setModalIsOpen(true)} className="h-8 w-8 text-black-500 m-2" />
             <ShareIcon className="h-8 w-8 text-black-500 m-2" />
         </div>
             <h1>title :{postInfo.title}</h1>
@@ -109,6 +113,17 @@ const Postpage = ({postInfo}) =>{
             </div>
             <button onClick={onCommentHandler}>Post</button>
         </div>
+
+        <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+            <div className="grid grid-flow-col grid-cols-2">
+                <div className="grid col-span-1">
+                <img src={postInfo.photo} />
+                </div>
+                <div className="grid col-span-1">
+                    
+                </div>
+            </div>
+        </Modal>
             
 
     </div>
